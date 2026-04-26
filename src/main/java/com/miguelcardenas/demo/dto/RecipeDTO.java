@@ -26,10 +26,10 @@ public class RecipeDTO {
             example = "Yogurt de textura espesa y alto contenido proteico")
     private String description;
 
-    @Schema(description = "Volumen base de leche sugerido para la receta (litros)", example = "10.0")
+    @Schema(description = "Volumen base de leche sugerido para la receta (en litros)", example = "10.0")
     private Double defaultMilkVolume;
 
-    @Schema(description = "Cantidad base de cultivo iniciador (starter) sugerida (gramos/ml)", example = "50.0")
+    @Schema(description = "Cantidad base de cultivo iniciador (starter) sugerida (cucharadas)", example = "20.0")
     private Double defaultStarterAmount;
 
     @Schema(description = "Temperatura ideal para la fase de pasteurización/calentamiento (°C)", example = "85.0")
@@ -44,13 +44,13 @@ public class RecipeDTO {
     @Schema(description = "Temperatura constante durante la fermentación (°C)", example = "43.0")
     private Double incubationTemperature;
 
-    @Schema(description = "Tiempo mínimo estimado para una fermentación correcta (minutos)", example = "360")
+    @Schema(description = "Tiempo mínimo estimado para una fermentación correcta (en minutos)", example = "360")
     private Integer minIncubationTime;
 
-    @Schema(description = "Tiempo de incubación máximo permitido (minutos)", example = "720")
+    @Schema(description = "Tiempo de incubación máximo permitido (en minutos)", example = "720")
     private Integer maxIncubationTime;
 
-    @Schema(description = "Tiempo sugerido de reposo en frío antes del consumo (minutos)", example = "240")
+    @Schema(description = "Tiempo sugerido de reposo en frío antes del consumo (en minutos)", example = "240")
     private Integer refrigerationTime;
 
     @Schema(description = "Nivel de complejidad técnica para la elaboración de la receta", example = "BEGINNER")

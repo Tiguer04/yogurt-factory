@@ -17,7 +17,7 @@ public class BatchDTO {
         @Schema(description = "Volumen de leche personalizado en litros (opcional, sobreescribe el valor de la receta)", example = "50.5")
         private Double customMilkVolume;
         
-        @Schema(description = "Cantidad de cultivo iniciador (starterAmount)", example = "200.0")
+        @Schema(description = "Cantidad de cultivo iniciador (Cucharadas)", example = "3.0")
         private Double customStarterAmount;
     }
     
