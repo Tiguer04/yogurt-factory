@@ -152,6 +152,13 @@ yogurt-factory/
 └── pom.xml
 ```
 
+## 📂 Documentación adicional
+
+En la carpeta [`docs/`](docs/) se encuentran:
+- Diagrama UML de clases del proyecto
+- Evidencias del funcionamiento de la API en Swagger
+- Evidencias del despliegue en Render
+  
 ---
 
 ## 📄 Licencia
