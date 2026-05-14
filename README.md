@@ -2,11 +2,9 @@
 
 Sistema de gestión y monitoreo de producción de yogures desarrollado con Java 21 y Spring Boot. Permite simular el ciclo completo de fabricación de yogurt, desde la creación de recetas hasta el monitoreo en tiempo real de lotes en producción.
 
-## 🚀 Demo en vivo
+## 🚀 Aplicación desplegada en Render, echa un vistazo...
 
 🔗 [https://yogurt-factory.onrender.com/swagger-ui/index.html](https://yogurt-factory.onrender.com/swagger-ui/index.html)
-
-> **Nota:** La aplicación está desplegada en el plan gratuito de Render. Si no responde de inmediato, espera unos segundos mientras el servidor despierta.
 
 ---
 
@@ -15,28 +13,33 @@ Sistema de gestión y monitoreo de producción de yogures desarrollado con Java 
 | Tecnología | Versión | Uso |
 |---|---|---|
 | Java | 21 | Lenguaje principal |
-| Spring Boot | 3.x | Framework principal |
+| Spring Boot | 3.2.5 | Framework principal |
 | Spring Data JPA | - | Acceso a datos |
 | H2 Database | - | Base de datos en memoria |
-| Lombok | - | Reducción de código boilerplate |
-| Swagger / OpenAPI | - | Documentación de la API |
-| Docker | - | Contenerización para despliegue |
+| Lombok | 1.18.30 | Simplificación del código |
+| Swagger / OpenAPI | 2.5.0 | Documentación de la API |
+| Docker | - | Contenerización para despliegue en Render |
 | Render | - | Plataforma de despliegue |
+
+⭐ Recomendación: En el pom.xml configure la dependencia de Lombok con la versión recomendada
+para Java 21, esto le ayudará a evitar problemas de compatibilidad en caso de que posea esta
+versión de Java.
 
 ---
 
-## 🏗️ Arquitectura
+## 🔩 Arquitectura
 
 El proyecto implementa una **Arquitectura en Capas** organizada en los siguientes paquetes:
 
 ```
 com.miguelcardenas.demo
-├── model         → Entidades JPA (tablas de la base de datos)
-├── repository    → Acceso a datos con Spring Data JPA
-├── service       → Lógica de negocio
-├── controller    → Endpoints REST
-├── dto           → Objetos de transferencia de datos
-└── exception     → Manejo centralizado de errores
+├── domain/
+│   ├── model         → Entidades JPA (tablas de la base de datos)
+│   ├── repository    → Acceso a datos con Spring Data JPA (Java Persistence API)
+│   ├── service       → Lógica de negocio
+│   └── controller    → Endpoints REST (Recibe peticiones y desencadena lógica de respuesta)
+├── dto               → Objetos de transferencia de datos
+└── exception         → Manejo centralizado de errores
 ```
 
 ---
@@ -49,13 +52,13 @@ com.miguelcardenas.demo
 |---|---|---|
 | GET | `/api/batches` | Obtener todos los lotes |
 | POST | `/api/batches` | Iniciar nuevo lote |
-| GET | `/api/batches/{batchId}` | Obtener detalles de un lote |
+| GET | `/api/batches/{batchId}` | Obtener detalles de un lote (Obtener por Id) |
 | POST | `/api/batches/{batchId}/heating` | Iniciar fase de calentamiento |
 | POST | `/api/batches/{batchId}/inoculating` | Iniciar fase de inoculación |
 | POST | `/api/batches/{batchId}/incubation` | Iniciar fase de incubación |
 | POST | `/api/batches/{batchId}/refrigeration` | Iniciar fase de refrigeración |
 | POST | `/api/batches/{batchId}/temperature` | Registrar temperatura |
-| POST | `/api/batches/{batchId}/complete` | Completar lote |
+| POST | `/api/batches/{batchId}/complete` | Completar lote (Lote terminado) |
 | POST | `/api/batches/{batchId}/fail` | Marcar lote como fallido |
 
 ### 📖 Gestión de Recetas `/api/recipes`
@@ -86,6 +89,7 @@ com.miguelcardenas.demo
 ### Prerrequisitos
 - Java 21
 - Maven 3.9+
+- (Importante) Lombok 1.18.30
 
 ### Pasos
 
@@ -101,46 +105,51 @@ cd yogurt-factory
 # http://localhost:8080/swagger-ui/index.html
 ```
 
----
-
-## 🐳 Ejecutar con Docker
-
-```bash
-# 1. Construir la imagen
-docker build -t yogurt-factory .
-
-# 2. Correr el contenedor
-docker run -p 8080:8080 yogurt-factory
-
-# 3. Abrir Swagger
-# http://localhost:8080/swagger-ui/index.html
-```
-
----
-
 ## 📁 Estructura del proyecto
+
+Esta estructura hace énfasis en los archivos específicamente necesarios para el funcionamiento
+correcto de la app. Omite documentos como el LICENSE, README.md, .gitignore, etc. También omite
+los scripts para correr Maven sin tenerlo instalado.
+
+Para más detalle, apreciar estructura completa en este repositorio.
+
 
 ```
 yogurt-factory/
 ├── src/
 │   └── main/
 │       ├── java/com/miguelcardenas/demo/
-│       │   ├── model/
-│       │   │   ├── Ingredient.java
-│       │   │   ├── Recipe.java
-│       │   │   ├── TemperatureLog.java
-│       │   │   └── YogurtBatch.java
-│       │   ├── repository/
-│       │   ├── service/
-│       │   ├── controller/
+│       │   ├── domain/
+│       │   │   ├── controller/
+│       │   │   │   ├── MonitoringController.java
+│       │   │   │   ├── RecipeController.java
+│       │   │   │   └── YogurtBatchController.java
+│       │   │   ├── model/
+│       │   │   │   ├── Ingredient.java
+│       │   │   │   ├── Recipe.java
+│       │   │   │   ├── TemperatureLog.java
+│       │   │   │   └── YogurtBatch.java
+│       │   │   ├── repository/
+│       │   │   │   ├── RecipeRepository.java
+│       │   │   │   ├── TemperatureLogRepository.java
+│       │   │   │   └── YogurtBatchRepository.java
+│       │   │   └── service/
+│       │   │       ├── RecipeService.java
+│       │   │       ├── TemperatureControlService.java
+│       │   │       └── YogurtMakingService.java
 │       │   ├── dto/
+│       │   │   ├── BatchDTO.java
+│       │   │   ├── IngredientDTO.java
+│       │   │   ├── MonitoringDTO.java
+│       │   │   ├── RecipeDTO.java
+│       │   │   └── TemperatureRecordDTO.java
 │       │   └── exception/
+│       │       ├── BusinessException.java
+│       │       └── GlobalExceptionHandler.java
 │       └── resources/
 │           └── application.properties
 ├── Dockerfile
-├── pom.xml
-├── LICENSE
-└── README.md
+└── pom.xml
 ```
 
 ---
