@@ -157,3 +157,7 @@ yogurt-factory/
 ## 📄 Licencia
 
 Este proyecto está bajo la licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
+
+## 👨‍🏫 Créditos
+
+Proyecto desarrollado bajo la guía de [@DanielDev87](https://github.com/DanielDev87)
